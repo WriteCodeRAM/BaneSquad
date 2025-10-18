@@ -1,6 +1,9 @@
 import { Redirect, Tabs } from "expo-router";
 import { useAuth } from "@clerk/clerk-expo";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { colors } from "../../../constants/theme";
 
 export default function TabsLayout() {
   const { isSignedIn } = useAuth();
@@ -13,9 +16,18 @@ export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#E31C25",
-        tabBarActiveBackgroundColor: "#000000",
-        tabBarInactiveBackgroundColor: "#000000",
+        headerStyle: {
+          backgroundColor: colors.background, // Dark background
+        },
+        headerTitleAlign: "center",
+        headerTintColor: colors.text, // White text
+        headerShadowVisible: false, // Remove shadow line
+        tabBarStyle: {
+          backgroundColor: colors.background, // Dark tab bar
+          borderTopColor: colors.border, // Subtle border
+        },
+        tabBarActiveTintColor: colors.primary, // Red when active
+        tabBarInactiveTintColor: colors.textSecondary, // Gray when inactive
       }}
     >
       <Tabs.Screen
@@ -27,8 +39,24 @@ export default function TabsLayout() {
           ),
         }}
       />
-      <Tabs.Screen name="referrals" options={{ title: "Referrals" }} />
-      <Tabs.Screen name="profile" options={{ title: "Profile" }} />
+      <Tabs.Screen
+        name="referrals"
+        options={{
+          title: "Referrals",
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="form" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 name="user-secret" size={24} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
